@@ -14,25 +14,23 @@
 # print(b)
 
 from math import *
+import sys
 
-n = int(input())
-a = []
+n = int(sys.stdin.readline())
+a = [int(sys.stdin.readline()) for i in range(n)]
 b = []
-for i in range(n):
-    a.append(int(input()))
-sorted(a)
-tmp = [a[i] - a[i - 1] for i in range(1, n)]
+a.sort()
+tmp = [(a[i] - a[i - 1]) for i in range(1, n)]
 res = tmp[0]
 
-for i in range(1, n - 1):
+for i in range(0, len(tmp)):
     res = gcd(res, tmp[i]) #최대 공약수
 
-for i in range(1, int(res ** 1/2) + 1):
+for i in range(2, int(sqrt(res)) + 1):
     if res % i == 0:
-        b.append(i)
-        b.append(res // i)
-b.remove(1)
+        b += [i, res//i]
+            
+b.append(res)
 b = list(set(b))
-sorted(b)
-for i in b:
-    print(i, end=' ')
+b.sort()
+print(*b)
